@@ -26,10 +26,10 @@ struct Expression {
 
 #[derive(Debug, Clone)]
 pub struct RollResult {
-    number: u8,
-    dice: u8,
-    value: Vec<u32>,
-    sum: i32,
+    pub number: u8,
+    pub dice: u8,
+    pub value: Vec<u32>,
+    pub sum: i32,
 }
 
 impl fmt::Display for RollResult {
