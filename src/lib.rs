@@ -19,14 +19,14 @@ enum Operation {
 
 #[derive(Debug, Clone)]
 struct Expression {
-    number: u8,
+    number: u16,
     dice: u8,
     modifiers: Vec<(Operation, i16)>,
 }
 
 #[derive(Debug, Clone)]
 pub struct RollResult {
-    pub number: u8,
+    pub number: u16,
     pub dice: u8,
     pub value: Vec<u32>,
     pub sum: i32,
@@ -67,10 +67,9 @@ pub fn roll_str(expression: &str) -> Result<RollResult, RollError> {
 }
 
 fn roll(expr: &Expression) -> Result<RollResult, RollError> {
-    let mut rng = rand::thread_rng();
     let mut result: Vec<u32> = vec![];
     for _i in 0..expr.number {
-        let n = rng.gen_range(1..=expr.dice);
+        let n = rand::thread_rng().gen_range(1..=expr.dice);
         result.push(n as u32);
     }
     let mut sum: i32 = result.iter().sum::<u32>() as i32;
@@ -120,12 +119,12 @@ fn parse(expression: &str) -> Option<Expression> {
         number: match result.name("num") {
             Some(m) => {
                 if m.as_str().len() != 0 {
-                    m.as_str().parse::<u8>().unwrap()
+                    m.as_str().parse::<u16>().unwrap()
                 } else {
-                    1u8
+                    1u16
                 }
             }
-            None => { 1u8 }
+            None => { 1u16 }
         },
         dice: result.name("dice").unwrap().as_str().parse::<u8>().unwrap(),
         modifiers: match mods_option {
