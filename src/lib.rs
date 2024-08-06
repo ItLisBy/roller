@@ -69,8 +69,12 @@ pub fn roll_str(expression: &str) -> Result<RollResult, RollError> {
 fn roll(expr: &Expression) -> Result<RollResult, RollError> {
     let mut result: Vec<u32> = vec![];
     for _i in 0..expr.number {
-        let n = rand::thread_rng().gen_range(1..=expr.dice);
-        result.push(n as u32);
+        let n = rand::thread_rng().gen_range(1..=expr.dice + 3);
+        if n > 10 {
+            result.push(10u32);
+        } else {
+            result.push(n as u32);
+        }
     }
     let mut sum: i32 = result.iter().sum::<u32>() as i32;
     for i in expr.modifiers.iter() {
