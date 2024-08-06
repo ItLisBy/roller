@@ -71,7 +71,7 @@ fn roll(expr: &Expression) -> Result<RollResult, RollError> {
     for _i in 0..expr.number {
         let n = rand::thread_rng().gen_range(1..=expr.dice + 3);
         if n > 10 {
-            result.push(10u32);
+            result.push(8u32);
         } else {
             result.push(n as u32);
         }
