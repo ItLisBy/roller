@@ -68,8 +68,9 @@ pub fn roll_str(expression: &str) -> Result<RollResult, RollError> {
 
 fn roll(expr: &Expression) -> Result<RollResult, RollError> {
     let mut result: Vec<u32> = vec![];
+    let stat_modifier = expr.dice / 3u8;
     for _i in 0..expr.number {
-        let n = rand::thread_rng().gen_range(1..=expr.dice + 3);
+        let n = rand::thread_rng().gen_range(1..=expr.dice + stat_modifier);
         if n > expr.dice {
             result.push(rand::thread_rng().gen_range((expr.dice + 1) / 2..=expr.dice) as u32);
         } else {
