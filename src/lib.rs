@@ -16,6 +16,7 @@ enum Operation {
     Add,
     Mul,
     Div,
+    SubEach,
 }
 
 #[derive(Debug, Clone)]
@@ -62,6 +63,16 @@ fn roll(expr: &Expression) -> Result<RollResult, RollError> {
             result.push(n as u32);
         }
     }
+    for i in expr.modifiers.iter() {
+        println!("{:?}", i);
+        if let Operation::SubEach = i.0 {
+            result = result
+                .iter()
+                .map(|x|
+                    if *x <= i.1 as u32 { 1 } else { x - (i.1 as u32) })
+                .collect()
+        };
+    }
     let mut sum: i32 = result.iter().sum::<u32>() as i32;
     for i in expr.modifiers.iter() {
         match i.0 {
@@ -69,6 +80,8 @@ fn roll(expr: &Expression) -> Result<RollResult, RollError> {
             Operation::Add => { sum += i.1 as i32 }
             Operation::Mul => { sum *= i.1 as i32 }
             Operation::Div => { sum /= i.1 as i32 }
+            _ => {}
+            // Operation::SubEach => {result = result.iter().map(|x| x - (i.1 as u32)).collect()}
         };
     }
     Ok(RollResult {

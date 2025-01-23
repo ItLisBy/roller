@@ -3,7 +3,7 @@ use crate::{Expression, Operation};
 
 pub fn parse(expression: &str) -> Option<Expression> {
     let re1 = Regex::new(r"(?<num>\d*)d(?<dice>\d+)(?<mods>.*)").unwrap();
-    let re2 = Regex::new(r"[+\-*/]\d+").unwrap();
+    let re2 = Regex::new(r"[+\-*/~]\d+").unwrap();
 
     let result = re1.captures(expression)?;
 
@@ -19,6 +19,7 @@ pub fn parse(expression: &str) -> Option<Expression> {
                     '-' => { (Operation::Subst, str[1..].parse::<i16>().unwrap()) }
                     '*' => { (Operation::Mul, str[1..].parse::<i16>().unwrap()) }
                     '/' => { (Operation::Div, str[1..].parse::<i16>().unwrap()) }
+                    '~' => { (Operation::SubEach, str[1..].parse::<i16>().unwrap()) }
                     _ => { return None }
                 })
             }).collect()
