@@ -64,7 +64,6 @@ fn roll(expr: &Expression) -> Result<RollResult, RollError> {
         }
     }
     for i in expr.modifiers.iter() {
-        println!("{:?}", i);
         if let Operation::SubEach = i.0 {
             result = result
                 .iter()
