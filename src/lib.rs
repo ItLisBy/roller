@@ -68,7 +68,7 @@ fn roll(expr: &Expression) -> Result<RollResult, RollError> {
             result = result
                 .iter()
                 .map(|x|
-                    if *x <= i.1 as u32 { 1 } else { x - (i.1 as u32) })
+                    if *x <= i.1 as u32 { 0 } else { x - (i.1 as u32) })
                 .collect()
         };
     }
